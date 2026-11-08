@@ -1,0 +1,962 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f3f4f6">
+  <meta name="color-scheme" content="light dark">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("ludor-theme");
+        if (t !== "dark" && t !== "light") t = (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+        document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    })();
+  </script>
+  <meta name="description" content="Официальные правила чатов Людор. Ознакомьтесь с правилами общения, безопасности и модерации.">
+  <title>Правила сообщества — Людор</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f3f4f6;
+      --surface: #ffffff;
+      --surface-2: #f7f8fa;
+      --text: #17191d;
+      --muted: #68707d;
+      --line: #e7e9ed;
+      --accent: #343a46;
+      --accent-2: #596273;
+      --accent-soft: #eef0f3;
+      --shadow: 0 18px 55px rgba(25, 30, 40, .07);
+      --shadow-soft: 0 8px 28px rgba(25, 30, 40, .045);
+      --green: #247b57;
+      --green-soft: #eaf5ef;
+      --warning: #91652b;
+      --warning-soft: #fbf3e7;
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+    }
+    [data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #101216;
+      --surface: #181b21;
+      --surface-2: #20242c;
+      --text: #f1f2f4;
+      --muted: #a0a7b3;
+      --line: #2b303a;
+      --accent: #e6e9ef;
+      --accent-2: #c1c8d3;
+      --accent-soft: #272c35;
+      --shadow: 0 18px 55px rgba(0, 0, 0, .28);
+      --shadow-soft: 0 8px 28px rgba(0, 0, 0, .18);
+      --green: #70c99c;
+      --green-soft: #1e342a;
+      --warning: #e1b779;
+      --warning-soft: #382d20;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      line-height: 1.65;
+      transition: background .25s ease, color .25s ease;
+    }
+    a { color: inherit; }
+    button { font: inherit; }
+    .topbar {
+      position: sticky; top: 0; z-index: 20;
+      backdrop-filter: blur(18px);
+      background: color-mix(in srgb, var(--bg) 86%, transparent);
+      border-bottom: 1px solid var(--line);
+    }
+    .topbar-inner {
+      max-width: 1180px; margin: 0 auto; min-height: 76px; padding: 0 26px;
+      display: flex; align-items: center; justify-content: space-between; gap: 18px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; min-width: 0; }
+    .brand-mark {
+      width: 42px; height: 42px; display: grid; place-items: center; flex: 0 0 auto;
+      border-radius: 14px; color: #fff; font-size: 19px; font-weight: 800;
+      background: linear-gradient(145deg, #454c59, #171a20);
+      box-shadow: 0 7px 18px rgba(28, 32, 40, .2);
+    }
+    [data-theme="dark"] .brand-mark { color: #171a20; background: linear-gradient(145deg, #f0f2f5, #aeb5c0); }
+    .brand-copy { display: grid; line-height: 1.2; }
+    .brand-copy strong { font-size: 15px; letter-spacing: .12em; }
+    .brand-copy span { margin-top: 4px; color: var(--muted); font-size: 11px; letter-spacing: .04em; }
+    .top-actions { display: flex; align-items: center; gap: 9px; }
+    .icon-btn, .top-link {
+      border: 1px solid var(--line); background: var(--surface); color: var(--text);
+      border-radius: 12px; min-height: 42px; padding: 0 13px; display: inline-flex;
+      align-items: center; justify-content: center; gap: 8px; text-decoration: none;
+      cursor: pointer; transition: transform .18s ease, border-color .18s ease, background .18s ease;
+      box-shadow: var(--shadow-soft); font-size: 13px; font-weight: 650;
+    }
+    .icon-btn { width: 44px; padding: 0; font-size: 18px; }
+    .icon-btn:hover, .top-link:hover { transform: translateY(-2px); border-color: var(--accent-2); }
+    .top-link.primary { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 42px 26px 76px; }
+    .hero {
+      position: relative; overflow: hidden; border-radius: 32px; padding: 54px 56px 48px;
+      color: #f8f9fb; background: linear-gradient(120deg, #303640 0%, #20242c 54%, #171a20 100%);
+      box-shadow: 0 25px 70px rgba(20, 24, 32, .19);
+    }
+    .hero:before, .hero:after { content: ""; position: absolute; pointer-events: none; border: 1px solid rgba(255,255,255,.10); border-radius: 50%; }
+    .hero:before { width: 430px; height: 430px; right: -110px; top: -235px; }
+    .hero:after { width: 560px; height: 560px; right: -185px; top: -290px; }
+    .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr) 230px; gap: 38px; align-items: center; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; color: #d2d6de; font-size: 11px; font-weight: 750; letter-spacing: .16em; text-transform: uppercase; }
+    .eyebrow:before { content: ""; width: 23px; height: 1px; background: #aeb5c0; }
+    h1 { margin: 17px 0 12px; font-size: clamp(38px, 6vw, 62px); line-height: 1.04; letter-spacing: -.055em; font-weight: 800; }
+    .hero p { max-width: 680px; margin: 0; color: #c9ced7; font-size: 16px; line-height: 1.75; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 27px; }
+    .pill { padding: 7px 11px; border: 1px solid rgba(255,255,255,.17); background: rgba(255,255,255,.07); border-radius: 999px; color: #e0e4ea; font-size: 11px; font-weight: 650; }
+    .hero-side { justify-self: end; width: 190px; aspect-ratio: 1; display: grid; place-items: center; position: relative; }
+    .hero-orbit { position: absolute; inset: 0; border: 1px solid rgba(255,255,255,.17); border-radius: 50%; }
+    .hero-orbit:before { content: ""; position: absolute; inset: 14px; border: 1px dashed rgba(255,255,255,.16); border-radius: 50%; }
+    .hero-crown { font-size: 64px; filter: grayscale(1); opacity: .95; text-shadow: 0 12px 28px rgba(0,0,0,.35); }
+    .hero-side small { position: absolute; bottom: 17px; color: #c7cbd3; font-size: 9px; letter-spacing: .22em; }
+    .notice {
+      display: flex; gap: 14px; align-items: flex-start; margin: 23px 0 35px; padding: 18px 20px;
+      background: var(--green-soft); border: 1px solid color-mix(in srgb, var(--green) 19%, var(--line)); border-radius: var(--radius-lg);
+    }
+    .notice-icon { width: 34px; height: 34px; flex: 0 0 auto; border-radius: 11px; display: grid; place-items: center; background: color-mix(in srgb, var(--green) 13%, transparent); color: var(--green); font-size: 16px; }
+    .notice strong { display: block; color: var(--text); font-size: 13px; margin-bottom: 3px; }
+    .notice p { margin: 0; color: var(--muted); font-size: 13px; }
+    .layout { display: grid; grid-template-columns: 265px minmax(0, 1fr); gap: 25px; align-items: start; }
+    .sidebar { position: sticky; top: 98px; }
+    .side-card, .content-card { border: 1px solid var(--line); border-radius: var(--radius-xl); background: var(--surface); box-shadow: var(--shadow-soft); }
+    .side-card { padding: 19px 14px; }
+    .side-title { margin: 0 10px 12px; color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; }
+    .nav-list { display: grid; gap: 4px; }
+    .nav-list a { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 11px; color: var(--muted); text-decoration: none; font-size: 12px; font-weight: 650; transition: .18s ease; }
+    .nav-list a:hover, .nav-list a.active { background: var(--accent-soft); color: var(--text); }
+    .nav-num { width: 23px; height: 23px; display: grid; place-items: center; border-radius: 7px; background: var(--surface-2); color: var(--muted); font-size: 10px; }
+    .sidebar-bottom { border-top: 1px solid var(--line); margin-top: 15px; padding: 15px 10px 2px; }
+    .sidebar-bottom p { margin: 0 0 10px; color: var(--muted); font-size: 11px; }
+    .mini-link { color: var(--text); text-decoration: none; font-size: 11px; font-weight: 750; }
+    .content-card { padding: 31px 34px; }
+    .content-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+    .content-head h2 { margin: 0; font-size: 22px; letter-spacing: -.035em; }
+    .content-head p { margin: 5px 0 0; color: var(--muted); font-size: 12px; }
+    .print-btn { border: 1px solid var(--line); border-radius: 10px; background: var(--surface-2); color: var(--text); padding: 8px 11px; font-size: 11px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+    .rule-section { padding: 27px 0 25px; border-bottom: 1px solid var(--line); scroll-margin-top: 100px; }
+    .rule-section:last-of-type { border-bottom: 0; padding-bottom: 8px; }
+    .section-title { display: flex; gap: 13px; align-items: flex-start; margin-bottom: 14px; }
+    .section-number { width: 39px; height: 39px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 12px; background: var(--accent-soft); color: var(--text); font-weight: 800; font-size: 12px; }
+    .section-title h3 { margin: 0; font-size: 17px; line-height: 1.35; letter-spacing: -.025em; }
+    .section-title p { margin: 4px 0 0; color: var(--muted); font-size: 11px; }
+    .rules { display: grid; gap: 9px; padding-left: 52px; }
+    .rule { display: grid; grid-template-columns: 48px minmax(0,1fr); gap: 7px; align-items: start; color: var(--text); font-size: 13px; line-height: 1.65; }
+    .rule-id { color: var(--muted); font-size: 11px; font-weight: 750; font-variant-numeric: tabular-nums; padding-top: 2px; }
+    .rule strong { font-weight: 750; }
+    .inline-note { margin: 15px 0 0 52px; padding: 13px 15px; border-radius: 12px; background: var(--surface-2); color: var(--muted); font-size: 11px; }
+    .inline-note strong { color: var(--text); }
+    .sanction-box { margin-top: 24px; padding: 21px; border: 1px solid color-mix(in srgb, var(--warning) 25%, var(--line)); background: var(--warning-soft); border-radius: var(--radius-lg); }
+    .sanction-box h3 { margin: 0 0 8px; font-size: 14px; }
+    .sanction-box p { margin: 0; color: var(--muted); font-size: 12px; }
+    .sanction-list { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 13px; }
+    .sanction-list span { padding: 6px 9px; border-radius: 8px; background: color-mix(in srgb, var(--warning) 10%, transparent); color: var(--text); font-size: 10px; font-weight: 700; }
+    .bottom-links { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; margin-top: 24px; }
+    .chat-link { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px; border: 1px solid var(--line); border-radius: 15px; background: var(--surface-2); text-decoration: none; transition: .18s ease; }
+    .chat-link:hover { transform: translateY(-2px); border-color: var(--accent-2); }
+    .chat-link strong { display: block; font-size: 12px; }
+    .chat-link small { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; }
+    .arrow { color: var(--muted); font-size: 18px; }
+    footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 25px; padding: 20px 5px 0; color: var(--muted); font-size: 10px; }
+    footer strong { color: var(--text); letter-spacing: .12em; }
+    .back-top { color: var(--muted); text-decoration: none; }
+    .site-footer { align-items:flex-start; flex-wrap:wrap; line-height:1.65; }
+    .footer-meta { display:grid; gap:4px; color:var(--muted); }
+    .footer-meta strong { letter-spacing:0; }
+    @media (max-width: 900px) {
+      .hero { padding: 42px 36px; }
+      .hero-grid { grid-template-columns: minmax(0,1fr) 160px; gap: 15px; }
+      .hero-side { width: 150px; }
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+      .side-card { padding: 15px; }
+      .nav-list { display: flex; overflow-x: auto; padding-bottom: 3px; }
+      .nav-list a { flex: 0 0 auto; }
+      .side-title, .sidebar-bottom { display: none; }
+    }
+    @media (max-width: 620px) {
+      .topbar-inner { min-height: 66px; padding: 0 15px; }
+      .brand-mark { width: 38px; height: 38px; }
+      .brand-copy strong { font-size: 13px; }
+      .brand-copy span { font-size: 9px; }
+      .top-link { display: none; }
+      .wrap { padding: 22px 14px 48px; }
+      .hero { border-radius: 23px; padding: 31px 24px 28px; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-side { position: absolute; width: 95px; right: 14px; top: 19px; opacity: .28; }
+      .hero-crown { font-size: 39px; }
+      .hero-side small { display: none; }
+      .hero p { max-width: 100%; font-size: 13px; padding-right: 5px; }
+      .hero-meta { margin-top: 20px; }
+      .pill { font-size: 9px; }
+      h1 { font-size: 43px; max-width: 290px; }
+      .notice { padding: 14px; margin: 17px 0 23px; }
+      .content-card { padding: 22px 17px; border-radius: 22px; }
+      .content-head h2 { font-size: 18px; }
+      .content-head { align-items: flex-start; }
+      .rules { padding-left: 0; gap: 10px; }
+      .rule { grid-template-columns: 43px minmax(0,1fr); font-size: 12px; }
+      .section-title h3 { font-size: 15px; }
+      .inline-note { margin-left: 0; }
+      .bottom-links { grid-template-columns: 1fr; }
+      footer { align-items: flex-start; flex-direction: column; }
+    }
+    @media print {
+      :root { color-scheme: light; --bg:#fff; --surface:#fff; --surface-2:#f7f7f7; --text:#111; --muted:#555; --line:#ddd; }
+      body { background: #fff; }
+      .topbar, .sidebar, .print-btn, .hero-side, .back-top { display: none !important; }
+      .wrap { max-width: none; padding: 0; }
+      .hero { color: #111; background: #f1f2f4; box-shadow: none; border: 1px solid #ddd; padding: 25px; }
+      .hero p, .eyebrow, .pill { color: #333; }
+      .pill { border-color: #ccc; background: #fff; }
+      .layout { display: block; }
+      .content-card { box-shadow: none; }
+      .rule-section { break-inside: avoid; }
+      a { text-decoration: none; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *:before, *:after { scroll-behavior: auto !important; transition: none !important; } }
+
+    /* Деликатная анимация, доступность и адаптация под разные экраны */
+    :root {
+      --motion: cubic-bezier(.2,.75,.25,1);
+      --focus: #858d9b;
+    }
+    html { scroll-padding-top: 112px; }
+    body {
+      min-height: 100vh;
+      background-image:
+        radial-gradient(ellipse at 8% 3%, color-mix(in srgb, var(--accent) 5%, transparent), transparent 32rem),
+        radial-gradient(ellipse at 94% 34%, color-mix(in srgb, var(--accent) 4%, transparent), transparent 34rem);
+    }
+    ::selection { background: color-mix(in srgb, var(--accent) 22%, transparent); color: var(--text); }
+    a, button { -webkit-tap-highlight-color: transparent; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+    .skip-link {
+      position: fixed; z-index: 100; top: 10px; left: 10px; padding: 11px 15px;
+      transform: translateY(-160%); border-radius: 12px; background: var(--text); color: var(--bg);
+      font-size: 13px; font-weight: 750; text-decoration: none; transition: transform .2s ease;
+    }
+    .skip-link:focus { transform: translateY(0); }
+    .scroll-progress { position: fixed; z-index: 60; inset: 0 0 auto; height: 3px; background: transparent; pointer-events: none; }
+    .scroll-progress span { display: block; width: 100%; height: 100%; transform: scaleX(0); transform-origin: left center;
+      background: linear-gradient(90deg, #777f8d, #d6d9df); box-shadow: 0 0 12px rgba(160,168,181,.35); }
+    .topbar { transition: background .25s ease, box-shadow .25s ease; }
+    .topbar.scrolled { box-shadow: 0 9px 30px rgba(0,0,0,.055); }
+    [data-theme="dark"] .topbar.scrolled { box-shadow: 0 9px 30px rgba(0,0,0,.18); }
+    .brand-mark { position: relative; overflow: hidden; transition: transform .35s var(--motion), box-shadow .35s ease; }
+    .brand-mark::after { content: ""; position: absolute; inset: -50% auto -50% -70%; width: 40%; transform: rotate(25deg);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.28), transparent); transition: left .65s ease; }
+    .brand:hover .brand-mark { transform: translateY(-2px) rotate(-4deg); box-shadow: 0 11px 25px rgba(28,32,40,.25); }
+    .brand:hover .brand-mark::after { left: 140%; }
+    .icon-btn { transition: transform .28s var(--motion), background .2s ease, border-color .2s ease; }
+    .icon-btn:active, .top-link:active, .print-btn:active { transform: scale(.96); }
+    .icon-btn { font-size: 20px; }
+    .hero { isolation: isolate; animation: hero-enter .8s var(--motion) both; }
+    .hero::before { animation: orbit-drift 19s linear infinite; }
+    .hero::after { animation: orbit-drift 28s linear infinite reverse; }
+    .hero-grid { animation: hero-copy .85s .08s var(--motion) both; }
+    .hero-orbit { animation: orbit-breathe 7s ease-in-out infinite; }
+    .hero-orbit:before { animation: orbit-spin 34s linear infinite; }
+    .hero-crown { animation: crown-float 5s ease-in-out infinite; }
+    .pill { transition: transform .22s var(--motion), background .22s ease, border-color .22s ease; }
+    .pill:hover { transform: translateY(-3px); background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.3); }
+    .notice { transition: transform .25s var(--motion), box-shadow .25s ease; }
+    .notice:hover { transform: translateY(-2px); box-shadow: var(--shadow-soft); }
+    .side-card, .content-card { transition: border-color .25s ease, background .25s ease, box-shadow .25s ease; }
+    .nav-list a { position: relative; overflow: hidden; min-height: 39px; }
+    .nav-list a::after { content: ""; position: absolute; left: 0; top: 8px; bottom: 8px; width: 2px; border-radius: 3px;
+      background: var(--text); transform: scaleY(0); transition: transform .2s ease; }
+    .nav-list a.active::after { transform: scaleY(1); }
+    .rule-section { transition: border-color .2s ease; }
+    .section-number { transition: transform .28s var(--motion), background .25s ease; }
+    .rule-section:hover .section-number { transform: translateY(-2px) rotate(-3deg); }
+    .rule { border-radius: 9px; }
+    .rule:hover { background: var(--surface-2); }
+    .chat-link { transition: transform .25s var(--motion), border-color .25s ease, box-shadow .25s ease; }
+    .chat-link:hover { transform: translateY(-4px); box-shadow: var(--shadow-soft); }
+    .chat-link:hover .arrow { transform: translate(2px,-2px); }
+    .arrow { transition: transform .2s ease; }
+    .print-btn:hover { border-color: var(--accent-2); }
+    .to-top {
+      position: fixed; z-index: 25; right: max(22px, env(safe-area-inset-right)); bottom: max(22px, env(safe-area-inset-bottom));
+      width: 48px; height: 48px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface);
+      color: var(--text); box-shadow: var(--shadow); font-size: 22px; cursor: pointer; opacity: 0; visibility: hidden;
+      transform: translateY(12px) scale(.92); transition: opacity .25s ease, visibility .25s ease, transform .25s var(--motion), background .2s ease;
+    }
+    .to-top.visible { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+    .to-top:active { transform: scale(.94); }
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s var(--motion), transform .7s var(--motion); transition-delay: var(--reveal-delay, 0ms); }
+    .reveal.is-visible { opacity: 1; transform: none; }
+    @keyframes hero-enter { from { opacity: 0; transform: translateY(18px) scale(.99); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes hero-copy { from { opacity: 0; transform: translateY(13px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes orbit-drift { 0% { transform: rotate(0deg) translateX(0); } 50% { transform: rotate(180deg) translateX(9px); } 100% { transform: rotate(360deg) translateX(0); } }
+    @keyframes orbit-breathe { 0%,100% { transform: scale(1); opacity: .8; } 50% { transform: scale(1.045); opacity: 1; } }
+    @keyframes orbit-spin { to { transform: rotate(360deg); } }
+    @keyframes crown-float { 0%,100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-9px) rotate(2deg); } }
+
+    /* Большие мониторы и широкие ноутбуки */
+    @media (min-width: 1440px) {
+      .topbar-inner, .wrap { max-width: 1280px; }
+      .layout { grid-template-columns: 285px minmax(0,1fr); gap: 30px; }
+      .content-card { padding: 38px 44px; }
+      .rules { gap: 11px; }
+      .rule { font-size: 14px; }
+    }
+    /* Планшеты: удобная горизонтальная навигация, остающаяся под шапкой */
+    @media (min-width: 621px) and (max-width: 900px) {
+      .topbar-inner { padding-inline: 22px; }
+      .wrap { padding: 30px 22px 60px; }
+      .hero { padding: 42px 38px; }
+      .layout { gap: 17px; }
+      .sidebar { position: sticky; top: 76px; z-index: 15; }
+      .side-card { padding: 10px 12px; border-radius: 17px; backdrop-filter: blur(16px); background: color-mix(in srgb, var(--surface) 92%, transparent); }
+      .nav-list { display: flex; gap: 6px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scrollbar-width: none; }
+      .nav-list::-webkit-scrollbar { display: none; }
+      .nav-list a { flex: 0 0 auto; scroll-snap-align: start; min-height: 42px; padding: 7px 10px; }
+      .nav-list a::after { display: none; }
+      .side-title, .sidebar-bottom { display: none; }
+      .content-card { padding: 27px 30px; }
+      .rule-section { scroll-margin-top: 145px; }
+    }
+    /* Телефоны */
+    @media (max-width: 620px) {
+      html { scroll-padding-top: 132px; }
+      .topbar-inner { min-height: 62px; padding-inline: 13px; gap: 8px; }
+      .brand { gap: 9px; }
+      .brand-mark { width: 36px; height: 36px; border-radius: 12px; }
+      .top-actions { margin-left: auto; }
+      .icon-btn { width: 42px; min-height: 42px; border-radius: 13px; }
+      .wrap { padding: 18px 12px 42px; }
+      .hero { padding: 28px 21px 23px; border-radius: 22px; }
+      .hero-grid { min-height: 205px; }
+      h1 { font-size: clamp(36px, 10vw, 45px); }
+      .hero p { font-size: 13px; line-height: 1.65; }
+      .hero-meta { max-width: 300px; gap: 6px; }
+      .pill { padding: 6px 9px; }
+      .hero-side { width: 88px; right: 8px; top: 18px; opacity: .23; }
+      .notice { gap: 10px; border-radius: 17px; }
+      .notice p { line-height: 1.6; }
+      .layout { gap: 12px; }
+      .sidebar { position: sticky; top: 62px; z-index: 16; margin-inline: -2px; }
+      .side-card { padding: 8px; border-radius: 15px; backdrop-filter: blur(18px); background: color-mix(in srgb, var(--surface) 91%, transparent); }
+      .nav-list { display: flex; gap: 5px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 0 1px 2px; }
+      .nav-list::-webkit-scrollbar { display: none; }
+      .nav-list a { flex: 0 0 auto; scroll-snap-align: center; min-height: 42px; padding: 6px 9px; font-size: 11px; white-space: nowrap; }
+      .nav-num { width: 25px; height: 25px; }
+      .nav-list a::after { display: none; }
+      .content-card { padding: 20px 15px; border-radius: 20px; }
+      .content-head { align-items: center; gap: 9px; padding-bottom: 16px; }
+      .content-head p { font-size: 11px; }
+      .print-btn { min-height: 40px; padding: 7px 9px; font-size: 10px; }
+      .rule-section { padding: 22px 0 20px; scroll-margin-top: 126px; }
+      .section-title { gap: 10px; }
+      .section-number { width: 35px; height: 35px; border-radius: 11px; }
+      .section-title h3 { font-size: 15px; }
+      .section-title p { font-size: 10px; }
+      .rules { gap: 7px; }
+      .rule { grid-template-columns: 39px minmax(0,1fr); gap: 5px; font-size: 12px; line-height: 1.62; }
+      .rule-id { font-size: 10px; }
+      .inline-note { padding: 11px 12px; font-size: 10px; }
+      .sanction-box { padding: 16px; }
+      .sanction-box p { line-height: 1.65; }
+      .bottom-links { gap: 8px; }
+      .chat-link { min-height: 64px; padding: 13px; }
+      footer { gap: 12px; line-height: 1.5; }
+      .footer-meta { gap:6px; }
+      .to-top { width: 44px; height: 44px; right: max(14px, env(safe-area-inset-right)); bottom: max(14px, env(safe-area-inset-bottom)); border-radius: 14px; }
+    }
+    @media (max-width: 390px) {
+      .brand-copy strong { font-size: 12px; }
+      .brand-copy span { font-size: 8px; letter-spacing: .02em; }
+      .hero { padding-inline: 17px; }
+      .hero-grid { min-height: 220px; }
+      h1 { font-size: 37px; }
+      .content-head { align-items: flex-start; flex-direction: column; }
+      .print-btn { align-self: flex-start; }
+      .rule { grid-template-columns: 36px minmax(0,1fr); }
+    }
+    /* Очень узкие экраны и телефоны в альбомной ориентации */
+    @media (max-width: 340px) {
+      .topbar-inner { padding-inline: 9px; }
+      .brand-copy span { display: none; }
+      .wrap { padding-inline: 8px; }
+      .content-card { padding-inline: 12px; }
+      .nav-list a { padding-inline: 7px; font-size: 10px; }
+      .rule { font-size: 11px; }
+    }
+    @media (max-height: 520px) and (orientation: landscape) {
+      .topbar-inner { min-height: 56px; }
+      .hero { padding-block: 24px; }
+      .hero-grid { grid-template-columns: minmax(0,1fr) 120px; }
+      .hero-side { width: 115px; }
+      .sidebar { position: sticky; top: 56px; }
+    }
+    @media (hover: none), (pointer: coarse) {
+      .nav-list a, .icon-btn, .top-link, .print-btn, .chat-link, .to-top { touch-action: manipulation; }
+      .nav-list a { min-height: 44px; }
+      .rule:hover { background: transparent; }
+      .pill:hover, .chat-link:hover { transform: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+
+    /* Новая подача правил: номер и формулировка на отдельных строках */
+    .rules { display: grid; gap: 12px; padding-left: 52px; }
+    .rule {
+      display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
+      padding: 15px 17px; border: 1px solid var(--line); border-radius: 15px;
+      background: linear-gradient(135deg, var(--surface-2), var(--surface));
+      color: var(--text); font-size: 13px; line-height: 1.72;
+      box-shadow: 0 5px 18px rgba(20,24,32,.025);
+      transition: transform .32s var(--motion), border-color .32s ease, box-shadow .32s ease, background .32s ease;
+      position: relative; overflow: hidden;
+    }
+    .rule::before { content:""; position:absolute; inset:0 auto 0 0; width:3px; background:var(--accent-2); opacity:.0; transition:opacity .3s ease; }
+    .rule:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--accent-2) 48%, var(--line)); box-shadow: 0 13px 28px rgba(20,24,32,.09); }
+    .rule:hover::before { opacity:.8; }
+    .rule-id { display:inline-flex; align-items:center; justify-content:center; min-width:42px; min-height:25px; padding:3px 9px; border-radius:8px; background:var(--accent-soft); color:var(--text); font-size:11px; font-weight:850; letter-spacing:.025em; }
+    .rule > span:last-child { display:block; width:100%; }
+    .rule strong { font-weight:800; }
+    .rule-section { transition: transform .45s var(--motion); }
+    .rule-section.is-visible .section-number { animation: numberPop .65s var(--motion) backwards; }
+    .rule-section.is-visible .rule { animation: ruleRise .55s var(--motion) backwards; }
+    .rule-section.is-visible .rule:nth-child(2) { animation-delay: .045s; }
+    .rule-section.is-visible .rule:nth-child(3) { animation-delay: .09s; }
+    .rule-section.is-visible .rule:nth-child(4) { animation-delay: .135s; }
+    .rule-section.is-visible .rule:nth-child(5) { animation-delay: .18s; }
+    .rule-section.is-visible .rule:nth-child(6) { animation-delay: .225s; }
+    .rule-section.is-visible .rule:nth-child(7) { animation-delay: .27s; }
+    .hero { animation: heroEnter .9s var(--motion) both; }
+    .hero-orbit { animation: orbitFloat 16s linear infinite; }
+    .hero-crown { animation: crownFloat 4.5s ease-in-out infinite; }
+    .notice { animation: softEnter .7s .18s var(--motion) both; }
+    .brand-mark { animation: brandGlow 5s ease-in-out infinite; }
+    .pill { transition: transform .3s var(--motion), background .3s ease; }
+    .pill:hover { transform: translateY(-3px) scale(1.025); background:rgba(255,255,255,.13); }
+    .chat-link { position:relative; overflow:hidden; }
+    .chat-link::after { content:""; position:absolute; inset:0; transform:translateX(-120%); background:linear-gradient(100deg,transparent,rgba(255,255,255,.16),transparent); transition:transform .65s ease; pointer-events:none; }
+    .chat-link:hover::after { transform:translateX(120%); }
+    @keyframes heroEnter { from { opacity:0; transform:translateY(24px) scale(.985); } to { opacity:1; transform:translateY(0) scale(1); } }
+    @keyframes softEnter { from { opacity:0; transform:translateY(15px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes ruleRise { from { opacity:0; transform:translateY(13px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes numberPop { 0% { transform:scale(.75) rotate(-7deg); } 65% { transform:scale(1.08) rotate(2deg); } 100% { transform:scale(1) rotate(0); } }
+    @keyframes crownFloat { 0%,100% { transform:translateY(0) rotate(-2deg); } 50% { transform:translateY(-9px) rotate(2deg); } }
+    @keyframes orbitFloat { to { transform:rotate(360deg); } }
+    @keyframes brandGlow { 0%,100% { box-shadow:0 7px 18px rgba(28,32,40,.2); } 50% { box-shadow:0 10px 28px rgba(110,120,140,.28); } }
+    [data-theme="dark"] .rule { box-shadow:0 6px 20px rgba(0,0,0,.12); }
+    [data-theme="dark"] .rule:hover { box-shadow:0 15px 30px rgba(0,0,0,.28); }
+    @media (max-width: 620px) {
+      .rules { padding-left:0; gap:9px; }
+      .rule { padding:13px 13px; border-radius:13px; font-size:12px; gap:5px; }
+      .rule-id { min-height:24px; min-width:40px; font-size:10px; }
+      .rule:hover { transform:none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero, .notice, .hero-orbit, .hero-crown, .brand-mark { animation:none !important; }
+      .rule-section.is-visible .rule, .rule-section.is-visible .section-number { animation:none !important; }
+    }
+
+
+
+    /* =====================================================================
+       v7 — единый адаптивный слой. Заменяет накопленные патчи v5–v6, которые
+       конфликтовали друг с другом (overflow на html+body блокировал прокрутку
+       на телефонах, pointer:coarse ломал планшеты, двойной отступ у якорей).
+       ===================================================================== */
+    :root {
+      --stick-top: 77px;  /* высота липкой шапки; точное значение выставляет скрипт */
+      --nav-h: 0px;       /* высота липкой навигации на узких экранах */
+      --anchor-offset: calc(var(--stick-top) + 22px);
+    }
+    html {
+      -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
+      overflow-x: clip;            /* только на html: не создаёт вложенный скролл-контейнер */
+      scroll-padding-top: 0;       /* отступ задаёт только scroll-margin у разделов */
+    }
+    body { overflow-x: visible; min-height: 100vh; min-height: 100dvh; }
+    .rule-section, #content { scroll-margin-top: var(--anchor-offset); }
+    .wrap, .layout, .layout > *, .content-card, .rule-section, .rules, .rule,
+    .section-title, .section-title > div, .content-head > div, .chat-link, .chat-link > span { min-width: 0; }
+    .rule { margin-left: 0; }
+    .rule > span:last-child { min-width: 0; overflow-wrap: anywhere; }
+    .section-title h3, .section-title p, .content-head h2, .content-head p, .inline-note { overflow-wrap: anywhere; }
+    .nav-list { overflow-y: hidden; }
+
+    /* ПК и большие планшеты: боковая панель липкая и прокручивается внутри себя */
+    @media (min-width: 901px) {
+      :root { --anchor-offset: calc(var(--stick-top) + 22px); }
+      .layout { grid-template-columns: 265px minmax(0, 1fr); }
+      .sidebar { position: sticky; top: calc(var(--stick-top) + 20px); }
+      .side-card {
+        max-height: calc(100vh - var(--stick-top) - 40px);
+        max-height: calc(100dvh - var(--stick-top) - 40px);
+        overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin;
+      }
+    }
+    @media (min-width: 1440px) { .layout { grid-template-columns: 285px minmax(0, 1fr); } }
+
+    /* Планшеты и телефоны: одна колонка, липкая горизонтальная навигация */
+    @media (max-width: 900px) {
+      :root { --stick-top: 77px; --nav-h: 69px; --anchor-offset: calc(var(--stick-top) + var(--nav-h) + 16px); }
+      .layout { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+      .topbar { background: var(--bg); backdrop-filter: none; -webkit-backdrop-filter: none; }
+      .sidebar { position: sticky; top: calc(var(--stick-top) - 1px); z-index: 16; width: 100%; margin-inline: 0; }
+      .side-card {
+        max-height: none; overflow: visible; padding: 9px 10px; border-radius: 17px;
+        background: var(--surface); backdrop-filter: none; -webkit-backdrop-filter: none;
+      }
+      .nav-list {
+        display: flex; gap: 6px; overflow-x: auto; overscroll-behavior-x: contain;
+        scroll-snap-type: x proximity; scrollbar-width: none; -webkit-overflow-scrolling: touch; padding: 0 1px 2px;
+      }
+      .nav-list::-webkit-scrollbar { display: none; }
+      .nav-list a { flex: 0 0 auto; scroll-snap-align: center; min-height: 44px; padding: 6px 10px; white-space: nowrap; }
+      .nav-list a::after { display: none; }
+      .side-title, .sidebar-bottom { display: none; }
+      .rules { display: grid; grid-template-columns: minmax(0, 1fr); padding-left: 0; gap: 10px; }
+      .rule { width: 100%; padding: 14px 15px; font-size: 14px; }
+      .inline-note { margin-left: 0; }
+      .content-card { padding: clamp(14px, 3.5vw, 27px); }
+      /* бесконечные анимации на мобильных только грузят процессор и мешают скроллу */
+      .brand-mark, .hero::before, .hero::after, .hero-orbit, .hero-orbit::before { animation: none; }
+    }
+    @media (max-width: 620px) {
+      :root { --stick-top: 63px; --nav-h: 62px; }
+      .side-card { padding: 8px; border-radius: 15px; }
+      .nav-list a { padding: 6px 9px; font-size: 11px; }
+      h1 { max-width: none; font-size: clamp(32px, 9.6vw, 45px); }
+      .hero-grid { min-height: 0; }
+      .hero p { max-width: none; }
+      .rule { padding: 13px 14px 14px; font-size: 13px; line-height: 1.68; }
+      .bottom-links { grid-template-columns: minmax(0, 1fr); }
+    }
+    @media (max-width: 360px) {
+      .rule { font-size: 12.5px; padding: 12px 12px 13px; }
+      .content-card { padding-inline: 11px; }
+    }
+
+    /* Низкие экраны (телефон в альбомной ориентации): не тратим высоту на липкие панели */
+    @media (max-height: 520px) {
+      :root { --stick-top: 0px; --nav-h: 0px; --anchor-offset: 16px; }
+      .topbar { position: relative; }
+      .sidebar { top: 12px; }
+      .side-card { max-height: calc(100vh - 24px); max-height: calc(100dvh - 24px); }
+    }
+    @media (max-height: 520px) and (max-width: 900px) {
+      .sidebar { position: static; }
+      .side-card { max-height: none; }
+    }
+
+    /* Сенсорные экраны: :hover «залипает» после касания — отключаем эффекты наведения */
+    @media (hover: none) {
+      .rule:hover { transform: none; background: linear-gradient(135deg, var(--surface-2), var(--surface)); border-color: var(--line); box-shadow: 0 5px 18px rgba(20,24,32,.035); }
+      .rule:hover::before { opacity: 0; }
+      .pill:hover, .chat-link:hover, .icon-btn:hover, .top-link:hover, .notice:hover { transform: none; }
+      .chat-link:hover::after { transform: translateX(-120%); }
+    }
+
+    /* Старые браузеры и WebView без color-mix(): без этого шапка и панели становились прозрачными */
+    @supports not (background: color-mix(in srgb, red 10%, blue)) {
+      .topbar { background: var(--bg); }
+      .side-card { background: var(--surface); }
+      .notice { border: 1px solid var(--line); }
+      .notice-icon { background: var(--surface); }
+      .sanction-box { border: 1px solid var(--line); }
+      .sanction-list span { background: var(--surface); }
+      .rule:hover { border-color: var(--accent-2); }
+    }
+
+    /* Печать: скрытые анимацией блоки не должны пропадать на бумаге */
+    @media print {
+      .reveal { opacity: 1 !important; transform: none !important; }
+      .scroll-progress, .to-top, .skip-link { display: none !important; }
+      .rule { box-shadow: none; background: #fff; animation: none !important; break-inside: avoid; }
+      .hero, .notice, .hero-orbit, .hero-crown, .brand-mark { animation: none !important; }
+      .rule-section.is-visible .rule, .rule-section.is-visible .section-number { animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#content">Перейти к правилам</a>
+  <div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div>
+  <header class="topbar" id="top">
+    <div class="topbar-inner">
+      <a class="brand" href="#top" aria-label="Людор — к началу страницы">
+        <span class="brand-mark">Л</span>
+        <span class="brand-copy"><strong>ЛЮДОР</strong><span>ПРАВИЛА СООБЩЕСТВА</span></span>
+      </a>
+      <div class="top-actions">
+        <a class="top-link" href="https://t.me/ludor_chat" target="_blank" rel="noopener">Открыть чат ↗</a>
+        <button class="icon-btn" id="themeToggle" type="button" aria-label="Переключить тему" title="Переключить тему">☾</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">Официальные правила</span>
+          <h1 id="page-title">Общаемся<br>уважительно.</h1>
+          <p>Правила двух чатов Людор. Здесь собраны основные требования к общению, публикациям и безопасности участников. Прочитайте их перед тем, как писать сообщения.</p>
+          <div class="hero-meta">
+            <span class="pill">12 разделов</span>
+            <span class="pill">Действуют в обоих чатах</span>
+            <span class="pill">Редакция от 08.11.2026</span>
+          </div>
+        </div>
+        <div class="hero-side" aria-hidden="true"><div class="hero-orbit"></div><div class="hero-crown">♛</div><small>LUDOR COMMUNITY</small></div>
+      </div>
+    </section>
+
+    <div class="notice">
+      <div class="notice-icon">✓</div>
+      <div><strong>На какие чаты распространяются правила</strong><p>Правила обязательны для участников <a href="https://t.me/ludor_chat" target="_blank" rel="noopener">чата Людор</a> и <a href="https://t.me/+Xl1jIcQbY343MzMy" target="_blank" rel="noopener">обсуждения канала</a>. Они распространяются на сообщения, комментарии, медиафайлы, голосовые сообщения, имена и другие способы взаимодействия в этих чатах.</p></div>
+    </div>
+
+    <div class="layout">
+      <aside class="sidebar" aria-label="Навигация по правилам">
+        <div class="side-card">
+          <p class="side-title">Содержание</p>
+          <nav class="nav-list" id="ruleNav">
+            <a href="#r1"><span class="nav-num">01</span> Общие положения</a>
+            <a href="#r2"><span class="nav-num">02</span> Уважение и общение</a>
+            <a href="#r3"><span class="nav-num">03</span> Контент</a>
+            <a href="#r4"><span class="nav-num">04</span> Спам и флуд</a>
+            <a href="#r5"><span class="nav-num">05</span> Ссылки и реклама</a>
+            <a href="#r6"><span class="nav-num">06</span> Приватность</a>
+            <a href="#r7"><span class="nav-num">07</span> Конфликты</a>
+            <a href="#r8"><span class="nav-num">08</span> Безопасность</a>
+            <a href="#r9"><span class="nav-num">09</span> Администрация</a>
+            <a href="#r10"><span class="nav-num">10</span> Обход ограничений</a>
+            <a href="#r11"><span class="nav-num">11</span> Модерация</a>
+            <a href="#r12"><span class="nav-num">12</span> Заключительные правила</a>
+          </nav>
+          <div class="sidebar-bottom"><p>Есть вопрос или нужна помощь?</p><a class="mini-link" href="https://t.me/ludor_help_bot" target="_blank" rel="noopener">Обратиться в поддержку ↗</a></div>
+        </div>
+      </aside>
+
+      <article class="content-card" id="content">
+        <div class="content-head">
+          <div><h2>Правила сообщества</h2><p>Пожалуйста, ознакомьтесь со всеми разделами.</p></div>
+          <button class="print-btn" type="button" onclick="window.print()">↧ Сохранить / печать</button>
+        </div>
+
+        <section class="rule-section" id="r1">
+          <div class="section-title"><span class="section-number">01</span><div><h3>Общие положения</h3><p>Область действия и основные принципы</p></div></div>
+          <div class="rules">
+            <div class="rule"><span class="rule-id">1.1</span><span>Правила действуют в <strong>чате Людор</strong> и <strong>обсуждении канала Людор</strong>.</span></div>
+            <div class="rule"><span class="rule-id">1.2</span><span>Участник обязан соблюдать правила с момента вступления в соответствующий чат.</span></div>
+            <div class="rule"><span class="rule-id">1.3</span><span>Правила распространяются на текст, изображения, видео, аудио, стикеры, файлы, реакции, имя профиля и другие материалы, отправляемые в чат.</span></div>
+            <div class="rule"><span class="rule-id">1.4</span><span><strong>Незнание правил не освобождает от ответственности.</strong></span></div>
+            <div class="rule"><span class="rule-id">1.5</span><span>Участник должен выполнять законные требования администрации, связанные с поддержанием порядка и безопасности.</span></div>
+            <div class="rule"><span class="rule-id">1.6</span><span>Попытки обойти смысл правил или намеренно воспользоваться неоднозначностью формулировок не являются оправданием нарушения.</span></div>
+          </div>
+        </section>
+
+        <section class="rule-section" id="r2">
+          <div class="section-title"><span class="section-number">02</span><div><h3>Уважение и общение</h3><p>Общайтесь спокойно, даже если мнения не совпадают</p></div></div>
+          <div class="rules">
+            <div class="rule"><span class="rule-id">2.1</span><span>Запрещены оскорбления, унижения и травля участников, администрации, модераторов, владельца проекта и их родственников.</span></div>
+            <div class="rule"><span class="rule-id">2.2</span><span>Запрещены угрозы, запугивание, шантаж и преследование участников.</span></div>
+            <div class="rule"><span class="rule-id">2.3</span><span>Запрещены дискриминационные высказывания и унижение людей по национальности, языку, происхождению, внешности, состоянию здоровья и другим личным признакам.</span></div>
+            <div class="rule"><span class="rule-id">2.4</span><span>Нельзя целенаправленно провоцировать человека, чтобы вызвать его негативную реакцию, сорвать общение или добиться наказания.</span></div>
+            <div class="rule"><span class="rule-id">2.5</span><span>Запрещено выдавать себя за другого участника, владельца или представителя администрации.</span></div>
+            <div class="rule"><span class="rule-id">2.6</span><span>Критика проекта и аргументированное несогласие разрешены. Обсуждайте поступки и идеи, а не переходите на личности.</span></div>
+          </div>
+        </section>
+
+        <section class="rule-section" id="r3">
+          <div class="section-title"><span class="section-number">03</span><div><h3>Запрещённый контент</h3><p>Материалы, которые могут навредить или шокировать</p></div></div>
+          <div class="rules">
+            <div class="rule"><span class="rule-id">3.1</span><span>Запрещены порнография, сексуально откровенные материалы и контент категории 18+.</span></div>
+            <div class="rule"><span class="rule-id">3.2</span><span>Запрещены шокирующие изображения и видео с реалистичными сценами крови, убийств, увечий и жестокого насилия.</span></div>
+            <div class="rule"><span class="rule-id">3.3</span><span>Запрещены угрозы реальным людям, призывы к насилию и одобрение реальных нападений.</span></div>
+            <div class="rule"><span class="rule-id">3.4</span><span>Запрещены материалы, содержащие травлю, унижение или намеренное запугивание конкретного человека.</span></div>
+            <div class="rule"><span class="rule-id">3.5</span><span>Запрещено публиковать незаконные материалы или контент, распространение которого может причинить вред другим людям.</span></div>
+            <div class="rule"><span class="rule-id">3.6</span><span>Запрещено размещать материалы, которые явно не подходят для безопасного общения в сообществе.</span></div>
+          </div>
+        </section>
+
+        <section class="rule-section" id="r4">
+          <div class="section-title"><span class="section-number">04</span><div><h3>Спам, флуд и оформление сообщений</h3><p>Не мешайте другим участникам общаться</p></div></div>
+          <div class="rules">
+            <div class="rule"><span class="rule-id">4.1</span><span>Запрещён спам: массовая отправка нежелательных, повторяющихся или не относящихся к обсуждению сообщений.</span></div>
+            <div class="rule"><span class="rule-id">4.2</span><span>Запрещён флуд, который мешает общению: бессмысленные цепочки сообщений, многократные повторы и чрезмерное засорение чата.</span></div>
+            <div class="rule"><span class="rule-id">4.3</span><span>Запрещено злоупотреблять CAPS LOCK, растягивать слова и отправлять чрезмерное количество символов с целью привлечь внимание или помешать общению.</span></div>
+            <div class="rule"><span class="rule-id">4.4</span><span>Запрещено массово отправлять стикеры, GIF, реакции, упоминания и другие материалы, мешающие переписке.</span></div>
+            <div class="rule"><span class="rule-id">4.5</span><span>Запрещено намеренно засорять чат бессмысленными файлами, командами, символами или длинными повторяющимися текстами.</span></div>
+            <div class="rule"><span class="rule-id">4.6</span><span>Не отправляйте несколько сообщений подряд без необходимости, если мысль можно изложить одним сообщением.</span></div>
+          </div>
+        </section>
+
+        <section class="rule-section" id="r5">
+          <div class="section-title"><span class="section-number">05</span><div><h3>Ссылки, реклама и продвижение</h3><p>Внешние ресурсы — только с разрешения администрации</p></div></div>
+          <div class="rules">
+            <div class="rule"><span class="rule-id">5.1</span><span>Запрещено публиковать ссылки на сторонние каналы, чаты, ботов, сайты и профили без разрешения администрации.</span></div>
+            <div class="rule"><span class="rule-id">5.2</span><span>Запрещены реклама, самореклама, продвижение услуг, товаров, проектов и личных страниц без согласования.</span></div>
+            <div class="rule"><span class="rule-id">5.3</span><span>Запрещено распространять реферальные ссылки, массовые приглашения и промокоды сторонних проектов без разрешения.</span></div>
+            <div class="rule"><span class="rule-id">5.4</span><span>Запрещено маскировать рекламу под обычное сообщение, отзыв или рекомендацию.</span></div>
+            <div class="rule"><span class="rule-id">5.5</span><span>Запрещены подозрительные ссылки, фишинговые страницы и ссылки, предназначенные для кражи данных или доступа к аккаунтам.</span></div>
+            <div class="rule"><span class="rule-id">5.6</span><span>Ссылки на ресурсы Людор и материалы, прямо разрешённые администрацией, не считаются нарушением.</span></div>
+          </div>
+        </section>
+
+        <section class="rule-section" id="r6">
+          <div class="section-title"><span class="section-number">06</span><div><h3>Личная информация и конфиденциальность</h3><p>Защищайте свои данные и данные других людей</p></div></div>
+          <div class="rules">
+            <div class="rule"><span class="rule-id">6.1</span><span>Запрещено публиковать чужие персональные данные без согласия человека.</span></div>
+            <div class="rule"><span class="rule-id">6.2</span><span>Запрещено раскрывать адреса, номера телефонов, документы, данные аккаунтов и другую непубличную информацию.</span></div>
+            <div class="rule"><span class="rule-id">6.3</span><span>Запрещено публиковать личные переписки, голосовые сообщения и приватные материалы без согласия участников переписки, кроме случаев передачи материалов администрации для рассмотрения жалобы.</span></div>
+            <div class="rule"><span class="rule-id">6.4</span><span>Запрещено распространять пароли, токены, API-ключи, коды подтверждения и другие секреты доступа.</span></div>
+            <div class="rule"><span class="rule-id">6.5</span><span>Запрещено сливать закрытую информацию проекта или администрации, если её публикация не была разрешена.</span></div>
+            <div class="rule"><span class="rule-id">6.6</span><span>Не просите у других участников пароли, коды входа и данные, которые дают доступ к их аккаунтам.</span></div>
+          </div>
+        </section>
+
+        <section class="rule-section" id="r7">
+          <div class="section-title"><span class="section-number">07</span><div><h3>Конфликты и провокации</h3><p>Разногласия решаются без массовых ссор</p></div></div>
+          <div class="rules">
+            <div class="rule"><span class="rule-id">7.1</span><span>Запрещено намеренно разжигать конфликты между участниками и провоцировать массовые ссоры.</span></div>
+            <div class="rule"><span class="rule-id">7.2</span><span>Запрещено призывать других участников нападать на человека, писать ему оскорбления или организовывать травлю.</span></div>
+            <div class="rule"><span class="rule-id">7.3</span><span>Запрещено организовывать набеги, массовые жалобы и другие скоординированные действия для срыва работы чата.</span></div>
+            <div class="rule"><span class="rule-id">7.4</span><span>Если администрация попросила прекратить спор, участники должны остановить перепалку в общем чате.</span></div>
+            <div class="rule"><span class="rule-id">7.5</span><span>Запрещено намеренно переносить личную ссору в чат, чтобы привлечь других участников или оказать давление на оппонента.</span></div>
+            <div class="rule"><span class="rule-id">7.6</span><span>Для решения спорной ситуации используйте личное обращение к администрации или поддержку.</span></div>
+          </div>
+        </section>
+
+        <section class="rule-section" id="r8">
+          <div class="section-title"><span class="section-number">08</span><div><h3>Безопасность и честность</h3><p>Не подвергайте риску себя и других участников</p></div></div>
+          <div class="rules">
+            <div class="rule"><span class="rule-id">8.1</span><span>Запрещено мошенничество, выманивание денег, игровой валюты, подарков или доступа к аккаунтам.</span></div>
+            <div class="rule"><span class="rule-id">8.2</span><span>Запрещено выдавать себя за владельца, администратора, модератора, службу поддержки или другого участника.</span></div>
+            <div class="rule"><span class="rule-id">8.3</span><span>Запрещено отправлять вредоносные файлы, программы и инструкции, предназначенные для причинения вреда устройствам или аккаунтам.</span></div>
+            <div class="rule"><span class="rule-id">8.4</span><span>Запрещено подделывать доказательства, скриншоты и сообщения для обмана участников или администрации.</span></div>
+            <div class="rule"><span class="rule-id">8.5</span><span>Запрещено намеренно распространять ложные сведения от имени проекта или администрации.</span></div>
+            <div class="rule"><span class="rule-id">8.6</span><span>Если вы заметили мошенничество, подозрительную ссылку или угрозу безопасности, сообщите администрации.</span></div>
+          </div>
+        </section>
+
+        <section class="rule-section" id="r9">
+          <div class="section-title"><span class="section-number">09</span><div><h3>Администрация и модерация</h3><p>Сотрудничайте с теми, кто поддерживает порядок</p></div></div>
+          <div class="rules">
+            <div class="rule"><span class="rule-id">9.1</span><span>Администрация следит за соблюдением правил и рассматривает сообщения о нарушениях.</span></div>
+            <div class="rule"><span class="rule-id">9.2</span><span>Запрещено оскорблять, запугивать, преследовать или намеренно мешать работе администрации.</span></div>
+            <div class="rule"><span class="rule-id">9.3</span><span>Запрещено выдавать себя за администратора или утверждать, что у вас есть полномочия, которых вам не предоставляли.</span></div>
+            <div class="rule"><span class="rule-id">9.4</span><span>Запрещено игнорировать обоснованные требования модератора прекратить нарушение или удалить запрещённый материал.</span></div>
+            <div class="rule"><span class="rule-id">9.5</span><span>Несогласие с решением модератора можно спокойно изложить администрации в личном обращении.</span></div>
+            <div class="rule"><span class="rule-id">9.6</span><span>Личные разбирательства с администрацией не должны превращаться в публичный конфликт или флуд.</span></div>
+          </div>
+        </section>
+
+        <section class="rule-section" id="r10">
+          <div class="section-title"><span class="section-number">10</span><div><h3>Обход наказаний и ограничений</h3><p>Повторное нарушение не становится допустимым из-за другого аккаунта</p></div></div>
+          <div class="rules">
+            <div class="rule"><span class="rule-id">10.1</span><span>Запрещено обходить временную или постоянную блокировку с помощью дополнительных аккаунтов.</span></div>
+            <div class="rule"><span class="rule-id">10.2</span><span>Запрещено продолжать нарушение через другой аккаунт, аккаунт знакомого или посредника.</span></div>
+            <div class="rule"><span class="rule-id">10.3</span><span>Запрещено помогать другим участникам обходить выданные ограничения.</span></div>
+            <div class="rule"><span class="rule-id">10.4</span><span>Запрещено намеренно мешать проверке нарушения, в том числе повторно публиковать удалённый администрацией контент.</span></div>
+          </div>
+        </section>
+
+        <section class="rule-section" id="r11">
+          <div class="section-title"><span class="section-number">11</span><div><h3>Жалобы и разбор ситуаций</h3><p>Помогайте администрации разбираться по существу</p></div></div>
+          <div class="rules">
+            <div class="rule"><span class="rule-id">11.1</span><span>О нарушениях сообщайте администрации или через <a href="https://t.me/ludor_help_bot" target="_blank" rel="noopener">бота поддержки</a>.</span></div>
+            <div class="rule"><span class="rule-id">11.2</span><span>При обращении по возможности приложите ссылку на сообщение, скриншот или краткое описание ситуации.</span></div>
+            <div class="rule"><span class="rule-id">11.3</span><span>Запрещено намеренно отправлять ложные жалобы или подделывать доказательства.</span></div>
+            <div class="rule"><span class="rule-id">11.4</span><span>Не используйте жалобы для мести, давления на участника или попытки добиться необоснованного наказания.</span></div>
+            <div class="rule"><span class="rule-id">11.5</span><span>Не публикуйте личные данные и приватную переписку в общем чате при разборе конфликта — передавайте необходимые материалы администрации лично.</span></div>
+          </div>
+        </section>
+
+        <section class="rule-section" id="r12">
+          <div class="section-title"><span class="section-number">12</span><div><h3>Модерация и заключительные положения</h3><p>Ответственность определяется с учётом обстоятельств</p></div></div>
+          <div class="rules">
+            <div class="rule"><span class="rule-id">12.1</span><span>За нарушение правил администрация может выдать предупреждение, удалить сообщение, ограничить отправку сообщений или заблокировать участника.</span></div>
+            <div class="rule"><span class="rule-id">12.2</span><span>Наказание определяется администрацией на своё усмотрение с учётом характера нарушения, его последствий, повторности и других обстоятельств.</span></div>
+            <div class="rule"><span class="rule-id">12.3</span><span>За серьёзные нарушения администрация может применить строгое наказание без предварительного предупреждения.</span></div>
+            <div class="rule"><span class="rule-id">12.4</span><span>Повторные нарушения могут повлечь более строгие меры.</span></div>
+            <div class="rule"><span class="rule-id">12.5</span><span>Администрация вправе вмешаться в ситуацию, которая прямо не описана в правилах, если она угрожает безопасности участников или нормальной работе сообщества.</span></div>
+            <div class="rule"><span class="rule-id">12.6</span><span>Администрация может обновлять правила. Актуальная редакция публикуется на этой странице.</span></div>
+          </div>
+          <div class="sanction-box">
+            <h3>⚖️ Важно о наказаниях</h3>
+            <p><strong>Наказания выдаёт администрация на своё усмотрение.</strong> Мера ответственности зависит от ситуации, тяжести и последствий нарушения, а также от истории поведения участника. Незнание правил не освобождает от ответственности.</p>
+            <div class="sanction-list"><span>Предупреждение</span><span>Удаление сообщения</span><span>Ограничение чата</span><span>Временная блокировка</span><span>Постоянная блокировка</span></div>
+          </div>
+        </section>
+
+        <div class="bottom-links">
+          <a class="chat-link" href="https://t.me/ludor_chat" target="_blank" rel="noopener"><span><strong>💬 Чат Людор</strong><small>Перейти в основной чат</small></span><span class="arrow">↗</span></a>
+          <a class="chat-link" href="https://t.me/+Xl1jIcQbY343MzMy" target="_blank" rel="noopener"><span><strong>🗣 Обсуждение канала</strong><small>Перейти к комментариям</small></span><span class="arrow">↗</span></a>
+        </div>
+      </article>
+    </div>
+
+    <footer class="site-footer"><div><strong>ЛЮДОР</strong><br><span>Официальные правила сообщества</span></div><div class="footer-meta"><span>Последнее обновление правил: <strong>08.11.2026</strong></span><span>© 2026 Людор. Все права защищены.</span><span>Правила действуют в чате и обсуждении канала Людор.</span></div><a class="back-top" href="#top">Наверх ↑</a></footer>
+  </main>
+  <button class="to-top" id="toTop" type="button" aria-label="Вернуться наверх" title="Наверх">↑</button>
+
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const toggle = document.getElementById('themeToggle');
+      const themeColor = document.querySelector('meta[name="theme-color"]');
+      const progress = document.getElementById('scrollProgress');
+      const toTop = document.getElementById('toTop');
+      const topbar = document.querySelector('.topbar');
+      const sidebar = document.querySelector('.sidebar');
+      const sideCard = document.querySelector('.side-card');
+      const nav = document.getElementById('ruleNav');
+      const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+      /* ---------- Тема ---------- */
+      const store = {
+        get() { try { return localStorage.getItem('ludor-theme'); } catch (_) { return null; } },
+        set(v) { try { localStorage.setItem('ludor-theme', v); } catch (_) { /* хранилище может быть недоступно */ } }
+      };
+      function applyTheme(theme) {
+        root.setAttribute('data-theme', theme);
+        toggle.textContent = theme === 'dark' ? '☀' : '☾';
+        toggle.setAttribute('aria-label', theme === 'dark' ? 'Включить светлую тему' : 'Включить ночную тему');
+        toggle.title = theme === 'dark' ? 'Светлая тема' : 'Ночная тема';
+        themeColor.setAttribute('content', theme === 'dark' ? '#101216' : '#f3f4f6');
+      }
+      const savedTheme = store.get();
+      applyTheme(savedTheme === 'dark' || savedTheme === 'light' ? savedTheme : (darkQuery.matches ? 'dark' : 'light'));
+      toggle.addEventListener('click', () => {
+        const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+        store.set(next);              // запоминаем только осознанный выбор пользователя
+      });
+      const onSystemTheme = e => { if (!store.get()) applyTheme(e.matches ? 'dark' : 'light'); };
+      if (darkQuery.addEventListener) darkQuery.addEventListener('change', onSystemTheme);
+      else if (darkQuery.addListener) darkQuery.addListener(onSystemTheme);
+
+      /* ---------- Высота липких панелей → CSS-переменные (для точных отступов у якорей) ---------- */
+      const metrics = { top: 0, nav: 0 };
+      function measure() {
+        const barSticky = getComputedStyle(topbar).position === 'sticky';
+        metrics.top = barSticky ? Math.round(topbar.getBoundingClientRect().height) : 0;
+        const sbRect = sidebar.getBoundingClientRect();
+        const stacked = getComputedStyle(sidebar).position === 'sticky' && sbRect.width > window.innerWidth * 0.6;
+        metrics.nav = stacked ? Math.round(sbRect.height) : 0;
+        root.style.setProperty('--stick-top', metrics.top + 'px');
+        root.style.setProperty('--nav-h', metrics.nav + 'px');
+      }
+
+      /* ---------- Навигация и активный раздел ---------- */
+      const navLinks = [...nav.querySelectorAll('a')];
+      const sections = navLinks.map(l => document.getElementById(l.getAttribute('href').slice(1))).filter(Boolean);
+      let lastNavTouch = 0;
+      ['pointerdown', 'touchstart', 'wheel'].forEach(ev => nav.addEventListener(ev, () => { lastNavTouch = performance.now(); }, { passive: true }));
+
+      // Двигаем только саму панель навигации — НЕ страницу (scrollIntoView прерывал инерционную прокрутку на телефонах).
+      function scrollInside(el, opts) {
+        try { el.scrollTo(Object.assign({ behavior: motionQuery.matches ? 'auto' : 'smooth' }, opts)); }
+        catch (_) { if ('left' in opts) el.scrollLeft = opts.left; if ('top' in opts) el.scrollTop = opts.top; }
+      }
+      function keepLinkVisible(link) {
+        if (performance.now() - lastNavTouch < 1500) return;   // не мешаем, пока пользователь сам листает панель
+        const lr = link.getBoundingClientRect();
+        if (nav.scrollWidth > nav.clientWidth + 2) {
+          const nr = nav.getBoundingClientRect();
+          scrollInside(nav, { left: Math.max(0, nav.scrollLeft + (lr.left - nr.left) - (nr.width - lr.width) / 2) });
+        } else if (sideCard.scrollHeight > sideCard.clientHeight + 2) {
+          const cr = sideCard.getBoundingClientRect();
+          if (lr.top < cr.top + 8 || lr.bottom > cr.bottom - 8) {
+            scrollInside(sideCard, { top: Math.max(0, sideCard.scrollTop + (lr.top - cr.top) - (cr.height - lr.height) / 2) });
+          }
+        }
+      }
+      let activeId = null;
+      function updateActive() {
+        const line = metrics.top + metrics.nav + 30;
+        let current = null;
+        for (const s of sections) { if (s.getBoundingClientRect().top <= line) current = s; else break; }
+        const atBottom = window.innerHeight + window.scrollY >= root.scrollHeight - 4;
+        if (atBottom && sections.length) current = sections[sections.length - 1];
+        const id = current ? current.id : null;
+        if (id === activeId) return;
+        activeId = id;
+        let activeLink = null;
+        navLinks.forEach(link => {
+          const on = id !== null && link.getAttribute('href') === '#' + id;
+          link.classList.toggle('active', on);
+          if (on) { link.setAttribute('aria-current', 'true'); activeLink = link; } else link.removeAttribute('aria-current');
+        });
+        if (activeLink) keepLinkVisible(activeLink);
+      }
+
+      /* ---------- Плавное появление блоков ---------- */
+      if ('IntersectionObserver' in window && !motionQuery.matches) {
+        const revealItems = [...document.querySelectorAll('.rule-section'), ...document.querySelectorAll('.chat-link')];
+        revealItems.forEach((el, index) => {
+          el.classList.add('reveal');
+          el.style.setProperty('--reveal-delay', `${Math.min(index % 5, 4) * 55}ms`);
+        });
+        const revealObserver = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) { entry.target.classList.add('is-visible'); revealObserver.unobserve(entry.target); }
+          });
+        }, { threshold: 0.05, rootMargin: '0px 0px -30px 0px' });
+        revealItems.forEach(el => revealObserver.observe(el));
+      }
+
+      /* ---------- Прокрутка: индикатор, «наверх», активный раздел ---------- */
+      let ticking = false;
+      function updateScrollUI() {
+        const y = window.scrollY || root.scrollTop || 0;
+        const maxScroll = root.scrollHeight - window.innerHeight;
+        progress.style.transform = `scaleX(${maxScroll > 0 ? Math.min(1, Math.max(0, y / maxScroll)) : 0})`;
+        toTop.classList.toggle('visible', y > 480);
+        topbar.classList.toggle('scrolled', y > 8);
+        updateActive();
+        ticking = false;
+      }
+      function schedule() { if (!ticking) { ticking = true; requestAnimationFrame(updateScrollUI); } }
+      window.addEventListener('scroll', schedule, { passive: true });
+      toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: motionQuery.matches ? 'auto' : 'smooth' }));
+
+      function relayout() { measure(); schedule(); }
+      window.addEventListener('resize', relayout, { passive: true });
+      window.addEventListener('orientationchange', relayout, { passive: true });
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(relayout);
+
+      /* ---------- Старт ---------- */
+      measure();
+      updateScrollUI();
+
+      // Ссылка вида …#r5: после точного замера высоты шапки выравниваем положение раздела.
+      let userScrolled = false;
+      ['wheel', 'touchstart', 'keydown'].forEach(ev => window.addEventListener(ev, () => { userScrolled = true; }, { passive: true, once: true }));
+      window.addEventListener('load', () => {
+        measure();
+        if (location.hash.length > 1 && !userScrolled) {
+          let target = null;
+          try { target = document.getElementById(decodeURIComponent(location.hash.slice(1))); } catch (_) {}
+          if (target) target.scrollIntoView({ block: 'start', behavior: 'auto' });
+        }
+        schedule();
+      });
+    })();
+  </script>
+</body>
+</html>
